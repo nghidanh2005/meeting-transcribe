@@ -1,0 +1,13 @@
+# Kiro Crew install artifacts - never commit these.
+# data/ holds runtime config with machine-resolved absolute paths and an
+# install-time version snapshot; committing it causes stale version display.
+/build
+/release-info
+.app_secret
+app-crons.json
+installed.json
+data/
+
+# Python
+__pycache__/
+*.py[cod]

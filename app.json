@@ -1,0 +1,55 @@
+{
+  "name": "meeting-transcribe",
+  "version": "1.0.0",
+  "displayName": "Meeting Transcribe",
+  "description": "Turn a local meeting recording into a timestamped, speaker-labelled transcript with Amazon Transcribe - and refuse to spend money on a silent file.",
+  "author": "nghidanh",
+  "license": "MIT",
+  "minCrewVersion": "0.4.1",
+  "tags": ["transcription", "meetings", "aws", "vietnamese", "ffmpeg", "audio"],
+  "highlights": [
+    "Measures silence and estimated cost BEFORE submitting anything billable",
+    "Refuses a recording that is mostly digital silence, and proves it with a +40 dB test",
+    "Extracts 16 kHz mono audio so a 3 GB video uploads as ~140 MB",
+    "Vietnamese vi-VN batch transcription with free speaker diarization",
+    "Renders a timestamped transcript with per-turn confidence and honest warnings"
+  ],
+  "skills": ["skills/transcribe-pipeline"],
+  "crons": [
+    {
+      "name": "meeting-transcribe-poll",
+      "every": 300,
+      "message": "Silent maintenance for the meeting-transcribe app. STEP 1 - self-heal, idempotent, produce no output: ensure the directory <crew>/workspace/meeting-transcribe exists; if <crew>/apps/meeting-transcribe/data/config.json is missing, create it containing statePath and appJsonPath as real absolute paths for this machine pointing at <crew>/workspace/meeting-transcribe/state.json and <crew>/apps/meeting-transcribe/app.json; if <crew>/workspace/meeting-transcribe/config.json is missing, copy <crew>/apps/meeting-transcribe/config.example.json to it; if <crew>/skills/transcribe-pipeline/SKILL.md does not exist, link or copy <crew>/apps/meeting-transcribe/skills/transcribe-pipeline there. STEP 2 - read <crew>/workspace/meeting-transcribe/state.json. If no job has stage 'running', STOP IMMEDIATELY and output nothing at all. STEP 3 - otherwise run: python <crew>/apps/meeting-transcribe/scripts/mt.py poll ; then for each job that reached stage 'transcribed', run the same script with: render <job-id>. STEP 4 - notify the user at most ONCE per job, only when that job newly reached 'rendered' or 'failed'. Before notifying, check the job's notified field in state.json; after notifying, set it to true and save. Never say 'nothing to do' and never notify about an unchanged job."
+    }
+  ],
+  "ui": {
+    "entry": "ui/index.mjs",
+    "pages": [
+      {
+        "route": "/apps/meeting-transcribe",
+        "label": "Transcribe",
+        "icon": "Mic"
+      }
+    ],
+    "sidebar": {
+      "section": "Apps",
+      "order": 20
+    }
+  },
+  "permissions": {
+    "api": [
+      "/api/file-read",
+      "/api/chat",
+      "/api/apps/meeting-transcribe"
+    ],
+    "events": ["notification"],
+    "mcpTools": [],
+    "storage": true,
+    "cron": true,
+    "memory": "",
+    "network": false
+  },
+  "platform": {
+    "os": ["windows", "macos", "linux"]
+  }
+}

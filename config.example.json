@@ -1,0 +1,12 @@
+{
+  "aws_cli": "",
+  "profile": "",
+  "region": "ap-southeast-1",
+  "bucket": "",
+  "language": "vi-VN",
+  "max_speakers": 10,
+  "vocabulary_name": "",
+  "silence_gate_pct": 80.0,
+  "price_per_minute_usd": 0.006,
+  "keep_wav": false
+}
