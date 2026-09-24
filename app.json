@@ -1,6 +1,6 @@
 {
   "name": "meeting-transcribe",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "Meeting Transcribe",
   "description": "Turn a local meeting recording into a timestamped, speaker-labelled transcript with Amazon Transcribe - and refuse to spend money on a silent file.",
   "author": "nghidanh",
@@ -23,24 +23,22 @@
     }
   ],
   "ui": {
-    "entry": "ui/index.mjs",
+    "entry": "index.mjs",
     "pages": [
       {
-        "route": "/apps/meeting-transcribe",
+        "route": "/meeting-transcribe",
         "label": "Transcribe",
-        "icon": "Mic"
+        "iconUrl": "icon.svg"
       }
-    ],
-    "sidebar": {
-      "section": "Apps",
-      "order": 20
-    }
+    ]
   },
   "permissions": {
     "api": [
+      "/api/apps/meeting-transcribe",
+      "/api/apps/meeting-transcribe/*",
       "/api/file-read",
       "/api/chat",
-      "/api/apps/meeting-transcribe"
+      "/api/chat/*"
     ],
     "events": ["notification"],
     "mcpTools": [],
